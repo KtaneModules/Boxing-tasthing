@@ -43,7 +43,7 @@ public class boxing : MonoBehaviour
 
     void Awake()
     {
-        moduleId = moduleIdCounter++;
+    	moduleId = moduleIdCounter++;
         boxingGlove.OnInteract += delegate () { PressBoxingGlove(); return false; };
 		hireButton.OnInteract += delegate () { Hire(); return false; };
 		abstainButton.OnInteract += delegate () { Abstain(); return false; };
