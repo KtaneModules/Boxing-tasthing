@@ -5,6 +5,7 @@ using System.Linq;
 using UnityEngine;
 using KModkit;
 using rnd = UnityEngine.Random;
+using System.Text.RegularExpressions;
 
 public class boxing : MonoBehaviour
 {
@@ -49,6 +50,7 @@ public class boxing : MonoBehaviour
 		abstainButton.OnInteract += delegate () { Abstain(); return false; };
 		foreach (KMSelectable arrowButton in arrowButtons)
 			arrowButton.OnInteract += delegate () { PressArrowButton(arrowButton); return false; };
+        GetComponent<KMBombModule>().OnActivate += OnActivate;
     }
 
 
@@ -106,12 +108,24 @@ public class boxing : MonoBehaviour
 			}
 			Debug.LogFormat("[Boxing #{0}] The strongest contestant not on steroids is {1}.", moduleId, possibleNames[contestantIndices[solution]]);
 		}
-		screenTexts[0].text = possibleNames[contestantIndices[0]];
+        screenTexts[0].text = "";
+        screenTexts[1].text = "";
+        screenTexts[2].text = "";
+        screenTexts[3].text = "";
+        /**screenTexts[0].text = possibleNames[contestantIndices[0]];
 		screenTexts[1].text = possibleLastNames[lastNameIndices[0]];
 		screenTexts[2].text = possibleSubstituteNames[substituteIndices[0]];
 		screenTexts[3].text = possibleLastNames[substituteLastNameIndices[0]];
 		foreach (TextMesh screenText in screenTexts)
-			screenText.color = blueContestant == 0 ? textColors[1] : textColors[0];
+			screenText.color = blueContestant == 0 ? textColors[1] : textColors[0];*/
+    }
+
+    void OnActivate()
+    {
+        string[] oldMessages = new string[4] { screenTexts[0].text, screenTexts[1].text, screenTexts[2].text, screenTexts[3].text };
+        string[] newMessages = new string[4] { possibleNames[contestantIndices[chosenContestant]], possibleLastNames[lastNameIndices[chosenContestant]], possibleSubstituteNames[substituteIndices[chosenContestant]], possibleLastNames[substituteLastNameIndices[chosenContestant]] };
+        for (int i = 0; i < 4; i++)
+            StartCoroutine(CycleText(screenTexts[i], oldMessages[i], newMessages[i]));
     }
 
     void PressBoxingGlove()
@@ -219,4 +233,72 @@ public class boxing : MonoBehaviour
 		animating[Array.IndexOf(screenTexts, display)] = false;
 	}
 
+    //twitch plays
+    #pragma warning disable 414
+    private readonly string TwitchHelpMessage = @"!{0} punch [Use the power punch machine] | !{0} left/right [Presses the left or right arrow] | !{0} hire [Presses the hire button] | !{0} abstain [Presses the abstain button]";
+    #pragma warning restore 414
+    IEnumerator ProcessTwitchCommand(string command)
+    {
+        if (Regex.IsMatch(command, @"^\s*punch\s*$", RegexOptions.IgnoreCase | RegexOptions.CultureInvariant))
+        {
+            yield return null;
+            boxingGlove.OnInteract();
+            yield break;
+        }
+        if (Regex.IsMatch(command, @"^\s*left\s*$", RegexOptions.IgnoreCase | RegexOptions.CultureInvariant))
+        {
+            yield return null;
+            arrowButtons[0].OnInteract();
+            yield break;
+        }
+        if (Regex.IsMatch(command, @"^\s*right\s*$", RegexOptions.IgnoreCase | RegexOptions.CultureInvariant))
+        {
+            yield return null;
+            arrowButtons[1].OnInteract();
+            yield break;
+        }
+        if (Regex.IsMatch(command, @"^\s*hire\s*$", RegexOptions.IgnoreCase | RegexOptions.CultureInvariant))
+        {
+            yield return null;
+            hireButton.OnInteract();
+            yield break;
+        }
+        if (Regex.IsMatch(command, @"^\s*abstain\s*$", RegexOptions.IgnoreCase | RegexOptions.CultureInvariant))
+        {
+            yield return null;
+            abstainButton.OnInteract();
+            yield break;
+        }
+    }
+
+    IEnumerator TwitchHandleForcedSolve()
+    {
+        while (animating.Contains(true)) { yield return true; yield return new WaitForSeconds(0.1f); }
+        if (solution == 10)
+        {
+            abstainButton.OnInteract();
+        }
+        else
+        {
+            if (chosenContestant < solution)
+            {
+                int times = solution - chosenContestant;
+                for (int i = 0; i < times; i++)
+                {
+                    arrowButtons[1].OnInteract();
+                    while (animating.Contains(true)) { yield return true; yield return new WaitForSeconds(0.1f); }
+                }
+            }
+            else if (chosenContestant > solution)
+            {
+                int times = chosenContestant - solution;
+                for (int i = 0; i < times; i++)
+                {
+                    arrowButtons[0].OnInteract();
+                    while (animating.Contains(true)) { yield return true; yield return new WaitForSeconds(0.1f); }
+                }
+            }
+            hireButton.OnInteract();
+        }
+    }
 }
