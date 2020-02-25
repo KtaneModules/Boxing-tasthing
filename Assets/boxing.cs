@@ -241,9 +241,9 @@ public class boxing : MonoBehaviour
 		animating[Array.IndexOf(screenTexts, display)] = false;
 	}
 
-    //twitch plays
+    // Twitch Plays
     #pragma warning disable 414
-    private readonly string TwitchHelpMessage = @"!{0} punch [Use the power punch machine] | !{0} left/right [Presses the left or right arrow] | !{0} hire [Presses the hire button] | !{0} abstain [Presses the abstain button]";
+    private readonly string TwitchHelpMessage = @"!{0} punch [Use the punch power machine] | !{0} left/right [Presses the left or right arrow] | !{0} hire [Presses the hire button] | !{0} abstain [Presses the abstain button]";
     #pragma warning restore 414
     IEnumerator ProcessTwitchCommand(string command)
     {
@@ -283,9 +283,7 @@ public class boxing : MonoBehaviour
     {
         while (animating.Contains(true)) { yield return true; yield return new WaitForSeconds(0.1f); }
         if (solution == 10)
-        {
             abstainButton.OnInteract();
-        }
         else
         {
             if (chosenContestant < solution)
