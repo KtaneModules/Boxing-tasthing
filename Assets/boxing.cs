@@ -36,7 +36,7 @@ public class boxing : MonoBehaviour
 	private static readonly Char[] alphabet = new Char[25] { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y' };
 	private static readonly string[] possibleNames = new string[25] { "Muhammed", "Mike", "Floyd", "Joe", "George", "Manny", "Sugar Ray", "Evander", "Oscar", "Roberto", "Jack", "Marvin", "Rocky", "Lennox", "Thomas", "Sonny", "Julio", "Roy", "Larry", "Archie", "Jake", "Bernard", "Gene", "Ken", "Wladimir" };
 	private static readonly string[] possibleSubstituteNames = new string[] { "Liam", "Noah", "William", "James", "Oliver", "Benjamin", "Elijah", "Lucas", "Mason", "Logan", "Alexander", "Ethan", "Jacob", "Michael", "Daniel", "Harry", "Jackson", "Sebastian", "Aiden", "Matthew", "Samuel", "David", "Joseph", "Carter", "Owen", "Wyatt", "John", "Jack", "Luke", "Jayden", "Dylan", "Grayson", "Levi", "Isaac", "Gabriel", "Julian", "Mateo", "Anthony", "Jaxon", "Lincoln", "Joshua", "Christopher", "Andrew", "Theodore", "Caleb", "Ryan", "Asher", "Nathan", "Thomas", "Leo", "Isaiah", "Charles", "Josiah", "Hudson", "Christian", "Hunter", "Connor", "Eli", "Ezra", "Aaron", "Landon", "Adrian", "Jonathan", "Nolan", "Jeremiah", "Easton", "Elias", "Colton", "Cameron", "Carson", "Robert", "Angel", "Maverick", "Nicholas", "Dominic", "Jaxson", "Greyson", "Adam", "Ian", "Austin", "Santiago", "Jordan", "Cooper", "Brayden", "Roman", "Evan", "Ezekial", "Xavier", "Jose", "Jameson", "Leonardo", "Bryson", "Axel", "Everett", "Parker", "Kayden", "Miles", "Sawyer", "Jason", "Declan", "Weston", "Micah", "Ayden", "Wesley", "Luca", "Vincent", "Damien", "Zachary", "Silas", "Gavin", "Chase", "Kai", "Emmett", "Harrison", "Nathaniel", "Kingston", "Cole", "Tyler", "Bennett", "Bentley", "Ryker", "Tristan", "Brandon", "Kevin", "Luis", "George", "Ashton", "Rowan", "Braxton", "Ryder", "Gael", "Ivan", "Diego", "Maxwell", "Max", "Carlos", "Kaiden", "Juan", "Maddox", "Justin", "Waylon", "Calvin", "Giovanni", "Jonah", "Abel", "Jayce", "Jesus", "Amir", "King", "Beau", "Camden", "Alex", "Jasper", "Malachi", "Brody", "Jude", "Blake", "Emmanuel", "Eric", "Brooks", "Elliot", "Antonio", "Abraham", "Timothy", "Finn", "Rhett", "Kaito", "Xaq", "Kors", "Guennadi", "Elliott", "Edward", "August", "Xander", "Alan", "Dean", "Lorenzo", "Bryce", "Karter", "Victor", "Milo", "Miguel", "Hayden", "Graham", "Grant", "Zion", "Tucker", "Jesse", "Zayden", "Joel", "Richard", "Patrick", "Emiliano", "Avery", "Nicolas", "Brantley", "Dawson", "Myles", "Matteo", "River", "Steven", "Thiago", "Zane", "Bernie" };
-	private static readonly string[] possibleLastNames = new string[] { "Hutchinson", "Boiko", "Mensa", "Jones", "Christ", "Smith", "Johnson", "Hall", "Stewart", "Price", "Allen", "Sanchez", "Bennett", "Shapiro", "Rodriguez", "Martinez", "Madhi", "Hussain", "Lee", "Lin", "Lao", "Savage", "Young", "Green", "Brown", "Morris", "Cook", "Taylor", "Walker", "Zimmerman", "King", "Davis", "Wright", "Henderson", "Miller", "Lopez", "Coleman", "Morgan", "Bell", "Moore", "Richardson", "Gonzalez", "Truck", "Hughes", "Patterson", "Jackson", "White", "Nelson", "Cox", "Dix", "Flores", "Howard", "Washington", "Zinn", "Torres", "Simmons", "Skinner", "Chalmers", "Martin", "Koppa", "Mogulescu", "Houshangi", "Tiveras", "Billy", "Mintzer", "Snyder", "Edwards", "Oh", "Kopek", "Bloom", "Hartstone", "Turner", "Tomas", "Cupaso", "Clark", "Sanders", "Lewis", "Phillips", "Gray", "Garcia", "Butler", "Ward", "Stein", "Joyner", "Crane", "Pickett", "Sears", "DeMayo", "Dunlap", "Universe", "McKay", "Ewing", "McCarthy", "Holder", "Stark", "Fulton", "Lynn", "Miranda", "Hooper", "Pollard", "Burch", "Mullen", "Duke", "O'Bryan", "Guy", "Britt", "Dillard", "Altson", "Jarvis", "Fitzpatrick", "Merrill", "Cote", "Raymond", "McGowan", "Craft", "Cleveland", "Clemons", "Wynn", "Nielsen", "Baird", "Stanton", "Snider", "Rosales", "Bright", "Witt", "Stuart", "Hays", "Holden", "Rutledge", "Kinney", "Clements", "Slater", "Hayder", "Pate", "Lancaster", "Burris", "Witcher", "McLovin", "Kidd", "Dale", "Hendrix", "Ramussen", "Sargeant", "Le", "Foreman", "Valencia", "Delacruz", "McMahon", "Vang", "Whitley", "Velazquez" };
+	private static readonly string[] possibleLastNames = new string[] { "Hutchinson", "Helmer", "Mensa", "Jones", "Christ", "Smith", "Johnson", "Hall", "Stewart", "Price", "Allen", "Sanchez", "Bennett", "Shapiro", "Rodriguez", "Martinez", "Madhi", "Hussain", "Lee", "Lin", "Lao", "Savage", "Young", "Green", "Brown", "Morris", "Cook", "Taylor", "Walker", "Zimmerman", "King", "Davis", "Wright", "Henderson", "Miller", "Lopez", "Coleman", "Morgan", "Bell", "Moore", "Richardson", "Gonzalez", "Truck", "Hughes", "Patterson", "Jackson", "White", "Nelson", "Cox", "Dix", "Flores", "Howard", "Washington", "Zinn", "Torres", "Simmons", "Skinner", "Chalmers", "Martin", "Koppa", "Mogulescu", "Houshangi", "Tiveras", "Billy", "Mintzer", "Snyder", "Edwards", "Oh", "Kopek", "Bloom", "Hartstone", "Turner", "Tomas", "Cupaso", "Clark", "Sanders", "Lewis", "Phillips", "Gray", "Garcia", "Butler", "Ward", "Stein", "Joyner", "Crane", "Pickett", "Sears", "DeMayo", "Dunlap", "Universe", "McKay", "Ewing", "McCarthy", "Holder", "Stark", "Fulton", "Lynn", "Miranda", "Hooper", "Pollard", "Burch", "Mullen", "Duke", "O'Bryan", "Guy", "Britt", "Dillard", "Altson", "Jarvis", "Fitzpatrick", "Merrill", "Cote", "Raymond", "McGowan", "Craft", "Cleveland", "Clemons", "Wynn", "Nielsen", "Baird", "Stanton", "Snider", "Rosales", "Bright", "Witt", "Stuart", "Hays", "Holden", "Rutledge", "Kinney", "Clements", "Slater", "Hayder", "Pate", "Lancaster", "Burris", "Witcher", "McLovin", "Kidd", "Dale", "Hendrix", "Ramussen", "Sargeant", "Le", "Foreman", "Valencia", "Delacruz", "McMahon", "Vang", "Whitley", "Velazquez" };
 
     static int moduleIdCounter = 1;
     int moduleId;
@@ -56,9 +56,6 @@ public class boxing : MonoBehaviour
 
     void Start()
     {
-		var dupliates = possibleSubstituteNames.Where(s => !possibleSubstituteNames.Distinct().Contains(s)).ToArray();
-		foreach (string duplicate in dupliates)
-			Debug.LogFormat("[Boxing #{0}] {1} is a duplicate.", moduleId, duplicate);
 		contestantStrengths = Enumerable.Range(0,5).ToList().Shuffle().ToArray();
 		contestantIndices = Enumerable.Range(0,25).ToList().Shuffle().Take(5).ToArray();
 		blueContestant = rnd.Range(0,5);
@@ -92,21 +89,32 @@ public class boxing : MonoBehaviour
 		int unmodifiedCount = count;
 		count %= 6;
 		Debug.LogFormat("[Boxing #{0}] The count is {1}, modulo 6 is {2}.", moduleId, unmodifiedCount, count % 6);
-		if (count == 5)
+		switch (count)
 		{
-			solution = 10;
-			Debug.LogFormat("[Boxing #{0}] Every contestant is on steroids. Abstain from participating.", moduleId);
-		}
-		else
-		{
-			if (count == 0)
+			case 5:
+				solution = 10;
+				Debug.LogFormat("[Boxing #{0}] Every contestant is on steroids. Abstain from participating.", moduleId);
+				break;
+			case 4:
+				solution = Array.IndexOf(contestantStrengths, 0);
+				Debug.LogFormat("[Boxing #{0}] The strongest contestant not on steroids is {1}.", moduleId, possibleNames[contestantIndices[solution]]);
+				break;
+			case 3:
+				solution = Array.IndexOf(contestantStrengths, 1);
+				Debug.LogFormat("[Boxing #{0}] The strongest contestant not on steroids is {1}.", moduleId, possibleNames[contestantIndices[solution]]);
+				break;
+			case 2:
+				solution = Array.IndexOf(contestantStrengths, 2);
+				Debug.LogFormat("[Boxing #{0}] The strongest contestant not on steroids is {1}.", moduleId, possibleNames[contestantIndices[solution]]);
+				break;
+			case 1:
+				solution = Array.IndexOf(contestantStrengths, 3);
+				Debug.LogFormat("[Boxing #{0}] The strongest contestant not on steroids is {1}.", moduleId, possibleNames[contestantIndices[solution]]);
+				break;
+			default:
 				solution = Array.IndexOf(contestantStrengths, 4);
-			else
-			{
-				int subtracted = 5 - count;
-				solution = Array.IndexOf(contestantStrengths, subtracted);
-			}
-			Debug.LogFormat("[Boxing #{0}] The strongest contestant not on steroids is {1}.", moduleId, possibleNames[contestantIndices[solution]]);
+				Debug.LogFormat("[Boxing #{0}] The strongest contestant not on steroids is {1}.", moduleId, possibleNames[contestantIndices[solution]]);
+				break;
 		}
         screenTexts[0].text = "";
         screenTexts[1].text = "";
