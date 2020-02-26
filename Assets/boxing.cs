@@ -120,12 +120,6 @@ public class boxing : MonoBehaviour
         screenTexts[1].text = "";
         screenTexts[2].text = "";
         screenTexts[3].text = "";
-        /**screenTexts[0].text = possibleNames[contestantIndices[0]];
-		screenTexts[1].text = possibleLastNames[lastNameIndices[0]];
-		screenTexts[2].text = possibleSubstituteNames[substituteIndices[0]];
-		screenTexts[3].text = possibleLastNames[substituteLastNameIndices[0]];
-		foreach (TextMesh screenText in screenTexts)
-			screenText.color = blueContestant == 0 ? textColors[1] : textColors[0];*/
     }
 
     void OnActivate()
