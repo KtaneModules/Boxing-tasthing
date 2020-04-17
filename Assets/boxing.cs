@@ -18,7 +18,7 @@ public class boxing : MonoBehaviour
     public KMSelectable abstainButton;
     public KMSelectable[] arrowButtons;
     public TextMesh[] screenTexts;
-    public Color[] textColors;
+    public Color defaultColor;
     public Color solveColor;
 
     private int[] contestantStrengths = new int[5];
@@ -26,11 +26,8 @@ public class boxing : MonoBehaviour
     private int[] lastNameIndices = new int[5];
     private int[] substituteIndices = new int[5];
     private int[] substituteLastNameIndices = new int[5];
-    private int blueContestant;
     private int solution;
     private int chosenContestant;
-
-    private bool[] animating = new bool[4];
 
     private static readonly float[] strengths = new float[5] { .5f, 1f, 2.5f, 5f, 8f };
     private static readonly Char[] alphabet = new Char[25] { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y' };
@@ -58,7 +55,6 @@ public class boxing : MonoBehaviour
     {
         contestantStrengths = Enumerable.Range(0, 5).ToList().Shuffle().ToArray();
         contestantIndices = Enumerable.Range(0, 25).ToList().Shuffle().Take(5).ToArray();
-        blueContestant = rnd.Range(0, 5);
         string[] ordinals = new string[5] { "1st", "2nd", "3rd", "4th", "5th" };
         int count = 0;
         List<Char> allCharacters = new List<Char>();
@@ -84,8 +80,6 @@ public class boxing : MonoBehaviour
             count += addCount;
             Debug.LogFormat("[Boxing #{0}] The {1} contestant is {2} {3}, with punch strength {4}, and his substitute is {5} {6}. His base 5 pair forms the letter {7}, so {8} is added to the total.", moduleId, ordinals[i], possibleNames[contestantIndices[i]], possibleLastNames[lastNameIndices[i]], contestantStrengths[i], possibleSubstituteNames[substituteIndices[i]], possibleLastNames[substituteLastNameIndices[i]], contestantChar, addCount);
         }
-        count += Array.IndexOf(alphabet, allCharacters[blueContestant]);
-        Debug.LogFormat("[Boxing #{0}] {1} has the blue name, so {2} is added.", moduleId, possibleNames[contestantIndices[blueContestant]], Array.IndexOf(alphabet, allCharacters[blueContestant]));
         int unmodifiedCount = count;
         count %= 6;
         Debug.LogFormat("[Boxing #{0}] The count is {1}, modulo 6 is {2}.", moduleId, unmodifiedCount, count % 6);
@@ -132,7 +126,7 @@ public class boxing : MonoBehaviour
 
     void PressBoxingGlove()
     {
-        if (moduleSolved || animating.Contains(true))
+        if (moduleSolved)
             return;
         boxingGlove.AddInteractionPunch(strengths[contestantStrengths[chosenContestant]]);
         audio.PlaySoundAtTransform("punch" + rnd.Range(0, 6).ToString(), boxingGlove.transform);
@@ -142,13 +136,14 @@ public class boxing : MonoBehaviour
     {
         audio.PlayGameSoundAtTransform(KMSoundOverride.SoundEffect.ButtonPress, button.transform);
         button.AddInteractionPunch(.5f);
-        if (moduleSolved || animating.Contains(true))
+        if (moduleSolved)
             return;
         int[] offsets = new int[2] { -1, 1 };
         int ix = Array.IndexOf(arrowButtons, button);
         if (!(chosenContestant == 0 && ix == 0) && !(chosenContestant == 4 && ix == 1))
         {
             chosenContestant += offsets[ix];
+            StopAllCoroutines();
             string[] oldMessages = new string[4] { screenTexts[0].text, screenTexts[1].text, screenTexts[2].text, screenTexts[3].text };
             string[] newMessages = new string[4] { possibleNames[contestantIndices[chosenContestant]], possibleLastNames[lastNameIndices[chosenContestant]], possibleSubstituteNames[substituteIndices[chosenContestant]], possibleLastNames[substituteLastNameIndices[chosenContestant]] };
             for (int i = 0; i < 4; i++)
@@ -162,7 +157,7 @@ public class boxing : MonoBehaviour
     {
         audio.PlayGameSoundAtTransform(KMSoundOverride.SoundEffect.ButtonPress, hireButton.transform);
         hireButton.AddInteractionPunch(.75f);
-        if (moduleSolved || animating.Contains(true))
+        if (moduleSolved)
             return;
         if (chosenContestant == solution)
         {
@@ -187,7 +182,7 @@ public class boxing : MonoBehaviour
     {
         audio.PlayGameSoundAtTransform(KMSoundOverride.SoundEffect.ButtonPress, abstainButton.transform);
         abstainButton.AddInteractionPunch(.75f);
-        if (moduleSolved || animating.Contains(true))
+        if (moduleSolved)
             return;
         if (solution == 10)
         {
@@ -210,7 +205,6 @@ public class boxing : MonoBehaviour
 
     IEnumerator CycleText(TextMesh display, string oldMessage, string newMessage)
     {
-        animating[Array.IndexOf(screenTexts, display)] = true;
         string currentMessage = oldMessage;
         int messageLength = currentMessage.Length;
         for (int i = 0; i < messageLength; i++)
@@ -222,7 +216,7 @@ public class boxing : MonoBehaviour
         }
         currentMessage = "";
         if (!moduleSolved)
-            display.color = chosenContestant == blueContestant ? textColors[1] : textColors[0];
+            display.color = Color.white; //sss
         else
             display.color = solveColor;
         for (int i = 0; i < newMessage.Length; i++)
@@ -232,7 +226,6 @@ public class boxing : MonoBehaviour
             audio.PlaySoundAtTransform("beep", display.transform);
             yield return new WaitForSeconds(.05f);
         }
-        animating[Array.IndexOf(screenTexts, display)] = false;
     }
 
     // Twitch Plays
@@ -277,7 +270,6 @@ public class boxing : MonoBehaviour
 
     IEnumerator TwitchHandleForcedSolve()
     {
-        while (animating.Contains(true)) { yield return true; yield return new WaitForSeconds(0.1f); }
         if (solution == 10)
             abstainButton.OnInteract();
         else
@@ -288,7 +280,7 @@ public class boxing : MonoBehaviour
                 for (int i = 0; i < times; i++)
                 {
                     arrowButtons[1].OnInteract();
-                    while (animating.Contains(true)) { yield return true; yield return new WaitForSeconds(0.1f); }
+                    yield return new WaitForSeconds(.1f);
                 }
             }
             else if (chosenContestant > solution)
@@ -297,7 +289,7 @@ public class boxing : MonoBehaviour
                 for (int i = 0; i < times; i++)
                 {
                     arrowButtons[0].OnInteract();
-                    while (animating.Contains(true)) { yield return true; yield return new WaitForSeconds(0.1f); }
+                    yield return new WaitForSeconds(.1f);
                 }
             }
             hireButton.OnInteract();
