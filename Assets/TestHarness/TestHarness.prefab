@@ -20159,24 +20159,14 @@ MonoBehaviour:
   HighlightPrefab: {fileID: 100000, guid: d78a484c6e87f1b47b6596ac080fe942, type: 2}
   AudioVolume: 0.25
   AudioClips:
-  - {fileID: 8300000, guid: 2ea00488a723da74fabd4f5649f9444f, type: 3}
-  - {fileID: 8300000, guid: 4ff9a25b3e5ae8c4eb0dbb273fc79fd5, type: 3}
-  - {fileID: 8300000, guid: 06eda79d06f69f04cb97a234805bf51a, type: 3}
-  - {fileID: 8300000, guid: d76ac3ce014d4954f8d7b91848077500, type: 3}
-  - {fileID: 8300000, guid: 4a840ad6a00f5974fb9d948ccc1ec7b4, type: 3}
-  - {fileID: 8300000, guid: c59fc7944d55e2743a547f2e77d352a0, type: 3}
-  - {fileID: 8300000, guid: 534c34fef5d1f214b92ef63d44be9161, type: 3}
-  - {fileID: 8300000, guid: b08cfe523dcf9da4784f6a74b469e8ae, type: 3}
-  - {fileID: 8300000, guid: 748223d2f7fa9b046bc1a5a92809ae04, type: 3}
-  - {fileID: 8300000, guid: 06eda79d06f69f04cb97a234805bf51a, type: 3}
-  - {fileID: 8300000, guid: 55306595b16ebef4bb7f17ed0ec2fc5c, type: 3}
-  - {fileID: 8300000, guid: 7a670656607f6c6498d1ba9bef648666, type: 3}
+  - {fileID: 8300000, guid: a6c7d8ea28607c049b760970df629f10, type: 3}
+  - {fileID: 8300000, guid: 5565e3d6d3a7a65419cb17b4d72e2115, type: 3}
   StrikeCount: 3
   TimeLimit: 600
   BombSize: 1
   FrontFaceOnly: 1
   EdgeworkConfiguration: {fileID: 0}
-  TwitchPlaysActive: 0
+  TwitchPlaysActive: 1
   TwitchPlaysMode: 0
   turnSpeed: 128
   panSpeed: 4
