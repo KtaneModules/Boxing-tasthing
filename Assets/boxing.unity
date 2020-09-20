@@ -405,6 +405,11 @@ Prefab:
       propertyPath: AudioClips.Array.data[10]
       value: 
       objectReference: {fileID: 8300000, guid: 06eda79d06f69f04cb97a234805bf51a, type: 3}
+    - target: {fileID: 102476131169566396, guid: 8814ea52310d2614a9feda02ec355ae4,
+        type: 2}
+      propertyPath: m_Color.rgba
+      value: 4294967295
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 8814ea52310d2614a9feda02ec355ae4, type: 2}
   m_IsPrefabParent: 0
