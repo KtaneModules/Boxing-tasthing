@@ -50,39 +50,28 @@ public class boxing : MonoBehaviour
         GetComponent<KMBombModule>().OnActivate += OnActivate;
     }
 
-
     void Start()
     {
         contestantStrengths = Enumerable.Range(0, 5).ToList().Shuffle().ToArray();
         contestantIndices = Enumerable.Range(0, 25).ToList().Shuffle().Take(5).ToArray();
-        string[] ordinals = new string[5] { "1st", "2nd", "3rd", "4th", "5th" };
-        int count = 0;
-        List<Char> allCharacters = new List<Char>();
-        var tempString = "";
+        var ordinals = new string[5] { "1st", "2nd", "3rd", "4th", "5th" };
+        var count = 0;
         for (int i = 0; i < 5; i++)
         {
             lastNameIndices[i] = rnd.Range(0, possibleLastNames.Length);
             substituteIndices[i] = rnd.Range(0, possibleSubstituteNames.Length);
             substituteLastNameIndices[i] = rnd.Range(0, possibleLastNames.Length);
-            tempString += possibleNames[contestantIndices[i]];
-            tempString += possibleLastNames[lastNameIndices[i]];
-            tempString += possibleSubstituteNames[substituteIndices[i]];
-            tempString += possibleLastNames[substituteLastNameIndices[i]];
-        }
-        tempString = tempString.ToUpperInvariant();
-        for (int i = 0; i < 5; i++)
-        {
             var value1 = contestantStrengths[contestantIndices[i] / 5];
             var value2 = contestantStrengths[contestantIndices[i] % 5];
             var contestantChar = alphabet[5 * value1 + value2];
-            allCharacters.Add(contestantChar);
-            var addCount = tempString.Count(c => c == contestantChar);
-            count += addCount;
-            Debug.LogFormat("[Boxing #{0}] The {1} contestant is {2} {3}, with punch strength {4}, and his substitute is {5} {6}. His base 5 pair forms the letter {7}, so {8} is added to the total.", moduleId, ordinals[i], possibleNames[contestantIndices[i]], possibleLastNames[lastNameIndices[i]], contestantStrengths[i], possibleSubstituteNames[substituteIndices[i]], possibleLastNames[substituteLastNameIndices[i]], contestantChar, addCount);
+            var letterPresent = possibleNames[contestantIndices[i]].ToUpperInvariant().Contains(contestantChar) || possibleLastNames[lastNameIndices[i]].ToUpperInvariant().Contains(contestantChar) || possibleSubstituteNames[substituteIndices[i]].ToUpperInvariant().Contains(contestantChar) || possibleLastNames[substituteLastNameIndices[i]].ToUpperInvariant().Contains(contestantChar);
+            if (letterPresent)
+                count += 1 << (4 - i);
+            Debug.LogFormat("[Boxing #{0}] The {1} contestant is {2} {3}, with punch strength {4}, and his substitute is {5} {6}. His base 5 pair forms the letter {7}, which is{8} present on the page.", moduleId, ordinals[i], possibleNames[contestantIndices[i]], possibleLastNames[lastNameIndices[i]], contestantStrengths[i], possibleSubstituteNames[substituteIndices[i]], possibleLastNames[substituteLastNameIndices[i]], contestantChar, letterPresent ? "" : " not");
         }
-        int unmodifiedCount = count;
+        var unmodifiedCount = count;
         count %= 6;
-        Debug.LogFormat("[Boxing #{0}] The count is {1}, modulo 6 is {2}.", moduleId, unmodifiedCount, count % 6);
+        Debug.LogFormat("[Boxing #{0}] The final number is {1}, modulo 6 is {2}.", moduleId, unmodifiedCount, count % 6);
         switch (count)
         {
             case 5:
@@ -118,8 +107,8 @@ public class boxing : MonoBehaviour
 
     void OnActivate()
     {
-        string[] oldMessages = new string[4] { screenTexts[0].text, screenTexts[1].text, screenTexts[2].text, screenTexts[3].text };
-        string[] newMessages = new string[4] { possibleNames[contestantIndices[chosenContestant]], possibleLastNames[lastNameIndices[chosenContestant]], possibleSubstituteNames[substituteIndices[chosenContestant]], possibleLastNames[substituteLastNameIndices[chosenContestant]] };
+        var oldMessages = new string[4] { screenTexts[0].text, screenTexts[1].text, screenTexts[2].text, screenTexts[3].text };
+        var newMessages = new string[4] { possibleNames[contestantIndices[chosenContestant]], possibleLastNames[lastNameIndices[chosenContestant]], possibleSubstituteNames[substituteIndices[chosenContestant]], possibleLastNames[substituteLastNameIndices[chosenContestant]] };
         for (int i = 0; i < 4; i++)
             StartCoroutine(CycleText(screenTexts[i], oldMessages[i], newMessages[i]));
     }
@@ -138,14 +127,14 @@ public class boxing : MonoBehaviour
         button.AddInteractionPunch(.5f);
         if (moduleSolved)
             return;
-        int[] offsets = new int[2] { -1, 1 };
-        int ix = Array.IndexOf(arrowButtons, button);
+        var offsets = new int[2] { -1, 1 };
+        var ix = Array.IndexOf(arrowButtons, button);
         if (!(chosenContestant == 0 && ix == 0) && !(chosenContestant == 4 && ix == 1))
         {
             chosenContestant += offsets[ix];
             StopAllCoroutines();
-            string[] oldMessages = new string[4] { screenTexts[0].text, screenTexts[1].text, screenTexts[2].text, screenTexts[3].text };
-            string[] newMessages = new string[4] { possibleNames[contestantIndices[chosenContestant]], possibleLastNames[lastNameIndices[chosenContestant]], possibleSubstituteNames[substituteIndices[chosenContestant]], possibleLastNames[substituteLastNameIndices[chosenContestant]] };
+            var oldMessages = new string[4] { screenTexts[0].text, screenTexts[1].text, screenTexts[2].text, screenTexts[3].text };
+            var newMessages = new string[4] { possibleNames[contestantIndices[chosenContestant]], possibleLastNames[lastNameIndices[chosenContestant]], possibleSubstituteNames[substituteIndices[chosenContestant]], possibleLastNames[substituteLastNameIndices[chosenContestant]] };
             for (int i = 0; i < 4; i++)
                 StartCoroutine(CycleText(screenTexts[i], oldMessages[i], newMessages[i]));
         }
@@ -164,8 +153,8 @@ public class boxing : MonoBehaviour
             module.HandlePass();
             Debug.LogFormat("[Boxing #{0}] You submitted {1}. That is correct. Module solved!", moduleId, possibleNames[contestantIndices[chosenContestant]]);
             moduleSolved = true;
-            string[] oldMessages = new string[4] { screenTexts[0].text, screenTexts[1].text, screenTexts[2].text, screenTexts[3].text };
-            string[] newMessages = new string[4] { "Ready", "for", "the", "match!" };
+            var oldMessages = new string[4] { screenTexts[0].text, screenTexts[1].text, screenTexts[2].text, screenTexts[3].text };
+            var newMessages = new string[4] { "Ready", "for", "the", "match!" };
             for (int i = 0; i < 4; i++)
                 StartCoroutine(CycleText(screenTexts[i], oldMessages[i], newMessages[i]));
             audio.PlaySoundAtTransform("bell", hireButton.transform);
@@ -190,8 +179,8 @@ public class boxing : MonoBehaviour
             Debug.LogFormat("[Boxing #{0}] You abstained from participating. That is correct. Module solved!", moduleId);
             audio.PlaySoundAtTransform("abstain", abstainButton.transform);
             moduleSolved = true;
-            string[] oldMessages = new string[4] { screenTexts[0].text, screenTexts[1].text, screenTexts[2].text, screenTexts[3].text };
-            string[] newMessages = new string[4] { "No", "contest", "this", "time..." };
+            var oldMessages = new string[4] { screenTexts[0].text, screenTexts[1].text, screenTexts[2].text, screenTexts[3].text };
+            var newMessages = new string[4] { "No", "contest", "this", "time..." };
             for (int i = 0; i < 4; i++)
                 StartCoroutine(CycleText(screenTexts[i], oldMessages[i], newMessages[i]));
         }
@@ -205,8 +194,8 @@ public class boxing : MonoBehaviour
 
     IEnumerator CycleText(TextMesh display, string oldMessage, string newMessage)
     {
-        string currentMessage = oldMessage;
-        int messageLength = currentMessage.Length;
+        var currentMessage = oldMessage;
+        var messageLength = currentMessage.Length;
         for (int i = 0; i < messageLength; i++)
         {
             currentMessage = currentMessage.Remove(currentMessage.Length - 1);
@@ -229,9 +218,9 @@ public class boxing : MonoBehaviour
     }
 
     // Twitch Plays
-    #pragma warning disable 414
+#pragma warning disable 414
     private readonly string TwitchHelpMessage = @"!{0} punch [Use the punch power machine] | !{0} left/right [Presses the left or right arrow] | !{0} hire [Presses the hire button] | !{0} abstain [Presses the abstain button]";
-    #pragma warning restore 414
+#pragma warning restore 414
     IEnumerator ProcessTwitchCommand(string command)
     {
         if (Regex.IsMatch(command, @"^\s*punch\s*$", RegexOptions.IgnoreCase | RegexOptions.CultureInvariant))
